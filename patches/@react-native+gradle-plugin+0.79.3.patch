@@ -1,6 +1,6 @@
 diff --git a/node_modules/@react-native/gradle-plugin/.gradle/buildOutputCleanup/buildOutputCleanup.lock b/node_modules/@react-native/gradle-plugin/.gradle/buildOutputCleanup/buildOutputCleanup.lock
 new file mode 100644
-index 0000000..0b7cf5e
+index 0000000..ce8c7c9
 Binary files /dev/null and b/node_modules/@react-native/gradle-plugin/.gradle/buildOutputCleanup/buildOutputCleanup.lock differ
 diff --git a/node_modules/@react-native/gradle-plugin/.gradle/buildOutputCleanup/cache.properties b/node_modules/@react-native/gradle-plugin/.gradle/buildOutputCleanup/cache.properties
 new file mode 100644
@@ -12,10 +12,10 @@ index 0000000..109e604
 +gradle.version=7.6.1
 diff --git a/node_modules/@react-native/gradle-plugin/.gradle/buildOutputCleanup/outputFiles.bin b/node_modules/@react-native/gradle-plugin/.gradle/buildOutputCleanup/outputFiles.bin
 new file mode 100644
-index 0000000..a4003b8
+index 0000000..93b0732
 Binary files /dev/null and b/node_modules/@react-native/gradle-plugin/.gradle/buildOutputCleanup/outputFiles.bin differ
 diff --git a/node_modules/@react-native/gradle-plugin/react-native-gradle-plugin/build.gradle.kts b/node_modules/@react-native/gradle-plugin/react-native-gradle-plugin/build.gradle.kts
-index 022f60c..acdf5d5 100644
+index 022f60c..3b28077 100644
 --- a/node_modules/@react-native/gradle-plugin/react-native-gradle-plugin/build.gradle.kts
 +++ b/node_modules/@react-native/gradle-plugin/react-native-gradle-plugin/build.gradle.kts
 @@ -5,77 +5,44 @@
@@ -113,7 +113,7 @@ index 022f60c..acdf5d5 100644
 -    showStackTraces = true
 -  }
 +tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
-+    kotlinOptions {
++    compilerOptions {
 +        allWarningsAsErrors.set(
 +            project.properties["enableWarningsAsErrors"]?.toString()?.toBoolean() ?: false
 +        )
