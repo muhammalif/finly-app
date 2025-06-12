@@ -1,32 +1,13 @@
-diff --git a/node_modules/@react-native/gradle-plugin/react-native-gradle-plugin/build.gradle.kts b/node_modules/@react-native/gradle-plugin/react-native-gradle-plugin/build.gradle.kts
-index 022f60c..fafbd7e 100644
---- a/node_modules/@react-native/gradle-plugin/react-native-gradle-plugin/build.gradle.kts
-+++ b/node_modules/@react-native/gradle-plugin/react-native-gradle-plugin/build.gradle.kts
-@@ -66,8 +66,9 @@ tasks.withType<KotlinCompile>().configureEach {
-     apiVersion.set(KotlinVersion.KOTLIN_1_7)
-     // See comment above on JDK 11 support
-     jvmTarget.set(JvmTarget.JVM_11)
--    allWarningsAsErrors =
--        project.properties["enableWarningsAsErrors"]?.toString()?.toBoolean() ?: false
-+    allWarningsAsErrors.set(
-+          project.properties["enableWarningsAsErrors"]?.toString()?.toBoolean() ?: false
-+    )
+diff --git a/node_modules/@react-native/gradle-plugin/settings.gradle.kts b/node_modules/@react-native/gradle-plugin/settings.gradle.kts
+index b3c46a3..07a136d 100644
+--- a/node_modules/@react-native/gradle-plugin/settings.gradle.kts
++++ b/node_modules/@react-native/gradle-plugin/settings.gradle.kts
+@@ -13,7 +13,7 @@ pluginManagement {
    }
  }
  
-diff --git a/node_modules/@react-native/gradle-plugin/settings-plugin/build.gradle.kts b/node_modules/@react-native/gradle-plugin/settings-plugin/build.gradle.kts
-index 8f5ae86..73c1483 100644
---- a/node_modules/@react-native/gradle-plugin/settings-plugin/build.gradle.kts
-+++ b/node_modules/@react-native/gradle-plugin/settings-plugin/build.gradle.kts
-@@ -56,8 +56,9 @@ tasks.withType<KotlinCompile>().configureEach {
-     apiVersion.set(KotlinVersion.KOTLIN_1_7)
-     // See comment above on JDK 11 support
-     jvmTarget.set(JvmTarget.JVM_11)
--    allWarningsAsErrors =
--        project.properties["enableWarningsAsErrors"]?.toString()?.toBoolean() ?: false
-+    allWarningsAsErrors.set(
-+          project.properties["enableWarningsAsErrors"]?.toString()?.toBoolean() ?: false
-+    )
-   }
- }
+-plugins { id("org.gradle.toolchains.foojay-resolver-convention").version("0.5.0") }
++// plugins { id("org.gradle.toolchains.foojay-resolver-convention").version("0.5.0") }
  
+ include(
+     ":react-native-gradle-plugin",
