@@ -1,6 +1,6 @@
 diff --git a/node_modules/@react-native/gradle-plugin/.gradle/buildOutputCleanup/buildOutputCleanup.lock b/node_modules/@react-native/gradle-plugin/.gradle/buildOutputCleanup/buildOutputCleanup.lock
 new file mode 100644
-index 0000000..4afec25
+index 0000000..0b7cf5e
 Binary files /dev/null and b/node_modules/@react-native/gradle-plugin/.gradle/buildOutputCleanup/buildOutputCleanup.lock differ
 diff --git a/node_modules/@react-native/gradle-plugin/.gradle/buildOutputCleanup/cache.properties b/node_modules/@react-native/gradle-plugin/.gradle/buildOutputCleanup/cache.properties
 new file mode 100644
@@ -12,13 +12,13 @@ index 0000000..109e604
 +gradle.version=7.6.1
 diff --git a/node_modules/@react-native/gradle-plugin/.gradle/buildOutputCleanup/outputFiles.bin b/node_modules/@react-native/gradle-plugin/.gradle/buildOutputCleanup/outputFiles.bin
 new file mode 100644
-index 0000000..f962313
+index 0000000..a4003b8
 Binary files /dev/null and b/node_modules/@react-native/gradle-plugin/.gradle/buildOutputCleanup/outputFiles.bin differ
 diff --git a/node_modules/@react-native/gradle-plugin/react-native-gradle-plugin/build.gradle.kts b/node_modules/@react-native/gradle-plugin/react-native-gradle-plugin/build.gradle.kts
-index 022f60c..a5bb904 100644
+index 022f60c..acdf5d5 100644
 --- a/node_modules/@react-native/gradle-plugin/react-native-gradle-plugin/build.gradle.kts
 +++ b/node_modules/@react-native/gradle-plugin/react-native-gradle-plugin/build.gradle.kts
-@@ -5,77 +5,92 @@
+@@ -5,77 +5,44 @@
   * LICENSE file in the root directory of this source tree.
   */
  
@@ -63,76 +63,34 @@ index 022f60c..a5bb904 100644
  
  dependencies {
 -  implementation(project(":shared"))
-+    implementation(project(":shared"))
-+    implementation(gradleApi())
-+    implementation(libs.kotlin.gradle.plugin)
-+    implementation(libs.android.gradle.plugin)
-+}
- 
+-
 -  implementation(gradleApi())
-+java {
-+    toolchain {
-+        languageVersion.set(JavaLanguageVersion.of(17))
-+    }
-+}
- 
+-
 -  // The KGP/AGP version is defined by React Native Gradle plugin.
 -  // Therefore we specify an implementation dep rather than a compileOnly.
 -  implementation(libs.kotlin.gradle.plugin)
 -  implementation(libs.android.gradle.plugin)
-+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
-+    kotlinOptions {
-+        allWarningsAsErrors.set(
-+            project.properties["enableWarningsAsErrors"]?.toString()?.toBoolean() ?: false
-+        )
-+    }
-+}
-+/*
-+ * Copyright (c) Meta Platforms, Inc. and affiliates.
-+ *
-+ * This source code is licensed under the MIT license found in the
-+ * LICENSE file in the root directory of this source tree.
-+ */
- 
+-
 -  implementation(libs.gson)
 -  implementation(libs.guava)
 -  implementation(libs.javapoet)
-+plugins {
-+    id("org.jetbrains.kotlin.jvm")
-+    id("java-gradle-plugin")
-+}
-+
-+repositories {
-+    google()
-+    mavenCentral()
-+}
- 
+-
 -  testImplementation(libs.junit)
 -  testImplementation(libs.assertj)
 -  testImplementation(project(":shared-testutil"))
-+gradlePlugin {
-+    plugins {
-+        create("react-settings") {
-+            id = "com.facebook.react.settings"
-+            implementationClass = "com.facebook.react.SettingsPlugin"
-+        }
-+    }
++    implementation(project(":shared"))
++    implementation(gradleApi())
++    implementation(libs.kotlin.gradle.plugin)
++    implementation(libs.android.gradle.plugin)
  }
  
 -// We intentionally don't build for Java 17 as users will see a cryptic bytecode version
 -// error first. Instead we produce a Java 11-compatible Gradle Plugin, so that AGP can print their
 -// nice message showing that JDK 11 (or 17) is required first
 -java { targetCompatibility = JavaVersion.VERSION_11 }
-+group = "com.facebook.react"
- 
+-
 -kotlin { jvmToolchain(17) }
-+dependencies {
-+    implementation(project(":shared"))
-+    implementation(gradleApi())
-+    implementation(libs.kotlin.gradle.plugin)
-+    implementation(libs.android.gradle.plugin)
-+}
- 
+-
 -tasks.withType<KotlinCompile>().configureEach {
 -  compilerOptions {
 -    apiVersion.set(KotlinVersion.KOTLIN_1_7)
