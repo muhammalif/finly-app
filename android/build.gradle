@@ -5,17 +5,70 @@ buildscript {
         compileSdkVersion = 35
         targetSdkVersion = 35
         ndkVersion = "27.1.12297006"
-        kotlinVersion = "2.0.21"
+        kotlinVersion = "1.8.22"
+        gradlePluginVersion = "8.6.0"
+        cmakeVersion = "3.22.1"
     }
     repositories {
         google()
         mavenCentral()
+        maven { url "$rootDir/../node_modules/react-native/android" }
     }
     dependencies {
-        classpath("com.android.tools.build:gradle")
+        classpath("com.android.tools.build:gradle:$gradlePluginVersion")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
         classpath("com.facebook.react:react-native-gradle-plugin")
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin")
     }
 }
 
-apply plugin: "com.facebook.react.rootproject"
+allprojects {
+    plugins.withType(JavaBasePlugin) {
+        java {
+            toolchain {
+                languageVersion = JavaLanguageVersion.of(17)
+            }
+        }
+    }
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        google()
+        maven { url "$rootDir/../node_modules/react-native/android" }
+        maven { url 'https://jitpack.io' }
+        maven { url "https://maven.google.com" }
+    }
+}
+
+configurations.all {
+    resolutionStrategy {
+        force 'androidx.core:core-ktx:1.16.0'
+        force 'androidx.core:core:1.16.0'
+        force 'androidx.appcompat:appcompat:1.6.1'
+        force 'com.facebook.react:react-native:+'
+        force 'org.jetbrains.kotlin:kotlin-stdlib:1.8.22'
+        force 'org.jetbrains.kotlin:kotlin-stdlib-common:1.8.22'
+        force 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.8.22'
+        force 'org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.22'
+    }
+}
+
+// allprojects {
+//     tasks.withType(JavaCompile) {
+//         options.encoding = "UTF-8"
+//         sourceCompatibility = javaVersion
+//         targetCompatibility = javaVersion
+//     }
+// }
+
+// Add this to handle React Native dependencies
+subprojects { subproject ->
+    afterEvaluate {
+        if (subproject.plugins.hasPlugin('android') ||
+            subproject.plugins.hasPlugin('android-library')) {
+            android {
+                compileSdkVersion rootProject.ext.compileSdkVersion
+                buildToolsVersion rootProject.ext.buildToolsVersion
+            }
+        }
+    }
+}
